@@ -1,0 +1,66 @@
+# Osteoporosis Prediction Project
+
+This project aims to develop a prediction system for osteoporosis using Logistic Regression and Random Forest models. The system predicts osteoporosis risk based on a variety of clinical and lifestyle factors. Below is a detailed explanation of the key components and scripts in this project.
+
+## Documents Overview
+
+**Treball_Final_Bioinfo.R**
+This script contains the entire process of training and evaluating a Logistic Regression model for osteoporosis prediction. The key steps include:
+
+1. Package Installation
+   
+2. Dataset Preparation:
+   - Loads the `osteoporosis.csv` dataset, removes irrelevant columns, handles missing data, and converts categorical variables into factors.
+   
+3. Model Training:
+   - Trains a Logistic Regression model using 70% of the dataset (training set) and evaluates it using confusion matrix, ROC curve, and Precision-Recall curve.
+
+4. Feature Importance Evaluation:
+   - A Random Forest model is trained to identify the most influential features for predicting osteoporosis.
+
+5. Model Saving:
+   - Saves the trained Logistic Regression and Random Forest models for future use.
+
+**API.R**
+This script sets up a **REST API** using the plumber package to provide osteoporosis predictions based on the trained Logistic Regression model. The key steps are:
+
+1. Library Loading
+
+2. API Endpoint Definition:
+   - Defines the predict_logistic endpoint that accepts user inputs such as gender, age, family history, physical activity, etc., and returns the probability and prediction (Yes/No) of osteoporosis.
+
+3. Input Format:
+   - Accepts both categorical (e.g., gender, family history) and numeric (e.g., age) input variables for making predictions.
+
+4. Prediction:
+   - Uses the trained Logistic Regression model to make predictions based on the provided inputs.
+
+**Run_API.R**
+This script runs the API defined in 'API.R' on a local server. 
+
+---
+
+## How to Run the Project
+
+1. **Train the model**:
+   - Run 'Treball_Final_Bioinfo.R' to train the Logistic Regression. Make sure the dataset (osteoporosis.csv) is placed correctly at the specified path.
+
+2. **Run the API**:
+   - Run 'API.R' to load the trained Logistic Regression model and set up the API with the predict_logistic` endpoint.
+
+3. **Start the server**:
+   - Run 'Run_API.R' to start the server and make the API available on port 8000.
+
+---
+
+## Required Packages
+
+The following R packages are required to run the project:
+
+- `plumber`: For creating REST APIs in R.
+- `caret`: For building predictive models.
+- `dplyr`: For data manipulation.
+- `PRROC`: For Precision-Recall curve creation.
+- `pROC`: For ROC curve creation and evaluation.
+- `smotefamily`: For handling imbalanced data through SMOTE.
+- `randomForest`: For building Random Forest models.
