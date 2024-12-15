@@ -1,8 +1,8 @@
 #Install required packages for data handling, model training, and evaluation
-install.packages("PRROC") 
-install.packages("pROC")
-install.packages("smotefamily")
-install.packages("randomForest")
+# install.packages("PRROC") 
+# install.packages("pROC")
+# install.packages("smotefamily")
+# install.packages("randomForest")
 
 # Load the necessary libraries
 library(caret)    # For model training and validation
@@ -132,8 +132,8 @@ ggplot(importance_df, aes(x = reorder(Feature, Importance), y = Importance)) +
   theme_minimal()
 
 # Save the trained models for future use
-save(model, file = paste0(path, "logistic_model.RData"))
-save(modelRF, file = paste0(path, "random_forest_model.RData"))
+save(model, file = paste0("logistic_model.RData"))
+save(modelRF, file = paste0("random_forest_model.RData"))
 
 # List files in the directory to confirm saved models
 list.files()
