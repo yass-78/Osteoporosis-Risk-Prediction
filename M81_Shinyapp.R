@@ -10,7 +10,7 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       # Input fields for each parameter
-      numericInput("Age", "Age (years):", value = 50, min = 1),
+      sliderInput("Age", "Age (years):", min = 18, max = 107, value = 45),  # Slider input for age
       selectInput("Gender", "Gender:", choices = c("Male", "Female")),
       selectInput("HormonalChanges", "Hormonal Changes:", choices = c("Normal", "Postmenopausal")),
       selectInput("FamilyHistory", "Family History of Osteoporosis:", choices = c("Yes", "No")),
@@ -22,16 +22,13 @@ ui <- fluidPage(
       selectInput("Smoking", "Smoking Status:", choices = c("Yes", "No")),
       selectInput("AlcoholConsumption", "Alcohol Consumption Level:", choices = c("Moderate", "None")),
       selectInput("Medications", "Medications:", choices = c("Corticosteroids", "None")),
-      selectInput("PriorFractures", "History of Prior Fractures:", choices = c("Yes", "No")),
-      
-      # Button to trigger the prediction
-      actionButton("predict_btn", "Predict")
+      selectInput("PriorFractures", "History of Prior Fractures:", choices = c("Yes", "No"))
     ),
     
     mainPanel(
       # Output fields for prediction results
       h3("Prediction Results"),
-      verbatimTextOutput("prediction"),
+      htmlOutput("prediction"),  # Color-coded output
       verbatimTextOutput("probability")
     )
   )
@@ -40,8 +37,8 @@ ui <- fluidPage(
 # Define the server logic
 server <- function(input, output, session) {
   
-  # API call when the button is clicked
-  observeEvent(input$predict_btn, {
+  # Reactive expression to call the API when inputs change
+  prediction_result <- reactive({
     # Collect inputs into a list
     inputs <- list(
       Gender = input$Gender,
@@ -68,15 +65,36 @@ server <- function(input, output, session) {
     # Parse the response
     if (response$status_code == 200) {
       result <- content(response, as = "parsed")
-      output$prediction <- renderText({
-        paste("Predicted Class: ", result$prediction)
-      })
-      output$probability <- renderText({
-        paste("Probability of Osteoporosis: ", round(result$probability * 100, 2), "%")
-      })
+      
+      # Extract the nested values properly
+      probability <- as.numeric(result$probability[[1]])
+      prediction <- as.character(result$prediction[[1]])
+      
+      list(probability = probability, prediction = prediction)
     } else {
-      output$prediction <- renderText("Error: Could not connect to the API.")
-      output$probability <- renderText("")
+      list(probability = NA, prediction = "Error: Could not connect to the API.")
+    }
+  })
+  
+  # Render color-coded prediction output
+  output$prediction <- renderUI({
+    result <- prediction_result()
+    if (result$prediction == "Yes") {
+      HTML(paste("<b style='color: red;'>Predicted Class: Yes</b>"))
+    } else if (result$prediction == "No") {
+      HTML(paste("<b style='color: green;'>Predicted Class: No</b>"))
+    } else {
+      HTML(paste("<b style='color: gray;'>", result$prediction, "</b>"))
+    }
+  })
+  
+  # Render the probability output
+  output$probability <- renderText({
+    result <- prediction_result()
+    if (!is.na(result$probability)) {
+      paste("Probability of Osteoporosis: ", round(result$probability * 100, 2), "%")
+    } else {
+      "Probability: Error in API response."
     }
   })
 }
