@@ -4,7 +4,7 @@ library(caret)  # For building predictive models
 library(dplyr)   # For data manipulation
 
 # Load the pre-trained logistic regression model
-load("logistic_model.RData")  
+load("data/logistic_model.RData")  
 
 # Define expected levels for each factor (categorical variable)
 levels_gender <- c("Male", "Female")

@@ -14,7 +14,7 @@ library(randomForest)# For Random Forest algorithm
 library(PRROC)    # For Precision-Recall Curves
 
 # Load the dataset ensuring that is saved at the specified path
-data <- read.csv("osteoporosis.csv")
+data <- read.csv("api/data/osteoporosis.csv")
 
 # Remove irrelevant columns that do not contribute to prediction such as "Id
 data <- data %>% select(-Id, -Medical.Conditions)
@@ -132,8 +132,8 @@ ggplot(importance_df, aes(x = reorder(Feature, Importance), y = Importance)) +
   theme_minimal()
 
 # Save the trained models for future use
-save(model, file = paste0("logistic_model.RData"))
-save(modelRF, file = paste0("random_forest_model.RData"))
+save(model, file = paste0("api/data/logistic_model.RData"))
+save(modelRF, file = paste0("api/data/random_forest_model.RData"))
 
 # List files in the directory to confirm saved models
 list.files()
