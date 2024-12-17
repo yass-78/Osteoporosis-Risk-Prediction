@@ -38,6 +38,27 @@ This script sets up a **REST API** using the plumber package to provide osteopor
 **Run_API.R**
 This script runs the API defined in 'API.R' on a local server. 
 
+**Shiny App (app.R)**
+   - The Shiny app provides an interactive user interface for predicting osteoporosis risk in real time. It allows users to input clinical and lifestyle variables and see immediate results.
+
+Key Features:
+1. Live Predictions: 
+   - Results update as you change input values.
+
+2. Color-Coded Output:
+   - Red: "Yes" (High risk of osteoporosis)
+   - Green: "No" (Low risk of osteoporosis)
+
+3. Age Selection: 
+   - Uses a slider for easy age selection.
+
+**How to Run:**
+1. Ensure the API is running on port 8000 by executing Run_API.R.
+
+2. Run the Shiny app script (app.R) in RStudio:
+
+3. Open the app in your browser, input values, and observe live predictions.
+
 ---
 
 ## How to Run the Project
@@ -51,6 +72,11 @@ This script runs the API defined in 'API.R' on a local server.
 3. **Start the server**:
    - Run 'Run_API.R' to start the server and make the API available on port 8000.
 
+4. **Run the Shiny App**:
+
+   - Run app.R to launch the interactive prediction interface.
+
+
 ---
 
 ## Required Packages
@@ -58,6 +84,9 @@ This script runs the API defined in 'API.R' on a local server.
 The following R packages are required to run the project:
 
 - `plumber`: For creating REST APIs in R.
+- `shiny`: For building interactive web applications.
+- `httr`: For sending HTTP requests to the API.
+- `jsonlite`: For parsing JSON data.
 - `caret`: For building predictive models.
 - `dplyr`: For data manipulation.
 - `PRROC`: For Precision-Recall curve creation.
