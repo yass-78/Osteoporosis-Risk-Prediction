@@ -57,7 +57,7 @@ server <- function(input, output, session) {
     )
     
     # Corrected API URL
-    api_url <- "http://127.0.0.1:8000/predict_logistic"
+    api_url <- "http://0.0.0.0:8000/predict_logistic"
     
     # Make the API POST request
     response <- POST(api_url, body = inputs, encode = "json")
@@ -101,3 +101,4 @@ server <- function(input, output, session) {
 
 # Run the application
 shinyApp(ui = ui, server = server)
+

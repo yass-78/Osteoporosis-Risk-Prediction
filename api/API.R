@@ -1,7 +1,6 @@
 # Load necessary libraries
 library(plumber)  # For creating REST APIs in R
-library(caret)  # For building predictive models
-library(dplyr)   # For data manipulation
+library(caret)
 
 # Load the pre-trained logistic regression model
 load("data/logistic_model.RData")  

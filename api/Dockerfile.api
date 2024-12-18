@@ -1,25 +1,20 @@
-# Step 1: Use a minimal R base image
-FROM rocker/r-ver:4.3.0
+# Use the rstudio/plumber image as the base image
+FROM rstudio/plumber
 
-# Step 2: Install system dependencies required by R packages
-RUN apt-get update && apt-get install -y \
-    libcurl4-openssl-dev \
-    libssl-dev \
-    libxml2-dev \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN R -e "install.packages('caret')"
 
-# Step 3: Install necessary R libraries (plumber and caret)
-RUN R -e "install.packages(c('plumber', 'caret', 'dplyr'), repos = 'https://cloud.r-project.org/')"
+# Copy the model and any other necessary files into the container
+COPY ./data /data
 
-# Step 4: Copy necessary files into the container
-COPY . /app
+# Copy your Plumber API script into the container
+COPY ./API.R /plumber.R
 
-# Step 5: Set the working directory
+# Set the working directory
 WORKDIR /app
 
-# Step 6: Set the default script to run the API
-CMD ["R", "-e", "source('RUN_API.R')"]
-
-# Step 7: Expose port 8000 (where the API runs)
+# Expose the port for the API
 EXPOSE 8000
+
+# Set the default command to run the Plumber API
+CMD ["plumber", "/plumber.R"]
 
