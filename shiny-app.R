@@ -139,7 +139,7 @@ server <- function(input, output, session) {
   
   # Function to send API request for a single row of data
   predict_single <- function(data) {
-    api_url <- "http://0.0.0.0:8000/predict_logistic"
+    api_url <- "http://plumber-api:8000/predict_logistic"
     response <- POST(api_url, body = data, encode = "json")
     if (response$status_code == 200) {
       result <- content(response, as = "parsed")

@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  shiny-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.app  # Dockerfile for the Shiny app in the same directory
+    container_name: my-shiny-app
+    ports:
+      - "8180:8180"  # Map Shiny app port
+    depends_on:
+      - plumber-api
+    networks:
+      - r_network
+
+  plumber-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api  # Dockerfile for the Plumber API in the same directory
+    container_name: my-plumber-api
+    ports:
+      - "8000:8000"  # Map Plumber API port
+    networks:
+      - r_network
+
+networks:
+  r_network:
+    driver: bridge

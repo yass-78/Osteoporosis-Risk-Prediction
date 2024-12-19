@@ -2,7 +2,7 @@
 FROM rocker/shiny
 
 # Install R dependencies
-RUN R -e "install.packages(c('httr', 'jsonlite'))"
+RUN R -e "install.packages(c('httr', 'jsonlite', 'shinythemes', 'DT', 'shinycssloaders', 'shinyjs'))"
 
 # Copy the model and any other necessary files into the container
 COPY ./shiny-app.R /app.R
@@ -14,4 +14,4 @@ WORKDIR /app
 EXPOSE 8180
 
 # Run the R Shiny app
-CMD Rscript -e "shiny::runApp('/app.R', host = '127.0.0.1', port = 7079)"
+CMD Rscript -e "shiny::runApp('/app.R', host = '0.0.0.0', port = 8180)"
