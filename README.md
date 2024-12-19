@@ -1,3 +1,4 @@
+
 # Osteoporosis Prediction Project
 
 This project aims to develop a prediction system for osteoporosis using Logistic Regression and Random Forest models. The system predicts osteoporosis risk based on a variety of clinical and lifestyle factors. Below is a detailed explanation of the key components and scripts in this project.
@@ -52,6 +53,17 @@ Key Features:
 3. Age Selection: 
    - Uses a slider for easy age selection.
 
+4. Batch Predictions (CSV Upload):
+   - Users can upload a CSV file containing data for multiple individuals. The app processes the data, predicts osteoporosis risk for each record, and allows users to download the results as a new CSV file.
+
+**How to Use the Batch Prediction Feature:**
+1. Navigate to the Batch Prediction tab in the Shiny app.
+2. Upload a properly formatted CSV file (columns must match the API input requirements, e.g., Gender, Age, etc.).
+3. Click the "Process CSV" button.
+4. View the predictions in the table displayed on the app.
+5. Download the results using the "Download Results as CSV" button.
+
+
 **How to Run:**
 1. Ensure the API is running on port 8000 by executing Run_API.R.
 
@@ -93,3 +105,6 @@ The following R packages are required to run the project:
 - `pROC`: For ROC curve creation and evaluation.
 - `smotefamily`: For handling imbalanced data through SMOTE.
 - `randomForest`: For building Random Forest models.
+- `shinycssloaders`: Adds a spinner when the app is loading or processing data..
+- `shinyjs`: Provides JavaScript capabilities to disable/enable buttons and improve interactivity.
+- `DT`: For rendering interactive tables in the Shiny app.  
