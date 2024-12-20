@@ -1,10 +1,9 @@
 # Load necessary libraries
 library(plumber)  # For creating REST APIs in R
-library(caret)  # For building predictive models
-library(dplyr)   # For data manipulation
+library(caret)
 
 # Load the pre-trained logistic regression model
-load("logistic_model.RData")  
+load("data/logistic_model.RData")  
 
 # Define expected levels for each factor (categorical variable)
 levels_gender <- c("Male", "Female")

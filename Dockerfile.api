@@ -1,0 +1,20 @@
+# Use the rstudio/plumber image as the base image
+FROM rstudio/plumber
+
+RUN R -e "install.packages('caret')"
+
+# Copy the model and any other necessary files into the container
+COPY ./data /data
+
+# Copy your Plumber API script into the container
+COPY ./API.R /plumber.R
+
+# Set the working directory
+WORKDIR /app
+
+# Expose the port for the API
+EXPOSE 8000
+
+# Set the default command to run the Plumber API
+CMD ["plumber", "/plumber.R"]
+
